@@ -1,6 +1,12 @@
 package training.supportbank;
 
-import java.io.*;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,12 +46,17 @@ public class ParserFactory {
         fileType = fileType.toLowerCase();
         switch(fileType) {
             case "csv":
+                System.out.println("csv");
                 parseCSV(accountMap, fileName);
+                break;
             case "json":
                 parseJSON(accountMap, fileName);
+                break;
             case "xml":
                 parseXML(accountMap, fileName);
+                break;
             default:
+                System.out.println("Defaulting");
                 parseCSV(accountMap, fileName);
         }
     }
@@ -71,24 +82,22 @@ public class ParserFactory {
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(inputFile);
             doc.getDocumentElement().normalize(); 
-            NodeList nList = doc.getElementsByTagName("SupportTansaction");
+            NodeList nList = doc.getElementsByTagName("SupportTransaction");
 
-            for(int temp = 0; temp <nList.getLength(); temp++){
+            for(int temp = 1; temp <nList.getLength(); temp++){
                 Node nNode =nList.item(temp);
+                System.out.println(temp);
                 if(nNode.getNodeType() == Node.ELEMENT_NODE){
                     Element eElement = (Element) nNode;
                     String date = eElement.getAttribute("Date");
                     String description = eElement.getElementsByTagName("Description").item(0).getTextContent();
                     String value = eElement.getElementsByTagName("Value").item(0).getTextContent();
-                    String from = eElement.getElementsByTagName("Parties").item(0).getTextContent();
-                    String to = eElement.getElementsByTagName("Parties").item(1).getTextContent();
+                    String from = eElement.getElementsByTagName("From").item(0).getTextContent();
+                    String to = eElement.getElementsByTagName("To").item(0).getTextContent();
                     Transaction transaction = new Transaction(date+","+from+"," +to+","+description+","+value);
                     accountMap.addTransaction(transaction);
-
                 }
             }
-
-
         } catch(Exception e){
             e.printStackTrace();
         }

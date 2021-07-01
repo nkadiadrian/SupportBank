@@ -1,5 +1,7 @@
 package training.supportbank;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -10,10 +12,13 @@ public class Transaction {
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
 
     private Date date;
+
+    @SerializedName("fromAccount")
     private String from;
+    @SerializedName("toAccount")
     private String to;
     private String narrative;
-    private long amount;
+    private double amount;
 
     public Transaction(String record) {
         List<String> fields = Arrays.asList(record.split(","));
@@ -25,7 +30,7 @@ public class Transaction {
         this.from = fields.get(1);
         this.to = fields.get(2);
         this.narrative = fields.get(3);
-        this.amount = (long) (Double.parseDouble(fields.get(4)) * 100);
+        this.amount = Double.parseDouble(fields.get(4));
     }
 
     public Date getDate() {
@@ -60,11 +65,11 @@ public class Transaction {
         this.narrative = narrative;
     }
 
-    public long getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(long amount) {
+    public void setAmount(float amount) {
         this.amount = amount;
     }
 

@@ -22,7 +22,7 @@ public class Account {
         this.name = name;
     }
 
-    public long getAmountOwed() {
+    public float getAmountOwed() {
         return amountOwed;
     }
 
@@ -40,12 +40,12 @@ public class Account {
 
     public void addTransactionTo(Transaction transaction) {
         transactions.add(transaction);
-        amountOwed += transaction.getAmount();
+        amountOwed += (long) transaction.getAmount() * 100;
     }
 
     public void addTransactionFrom(Transaction transaction) {
         transactions.add(transaction);
-        amountOwed -= transaction.getAmount();
+        amountOwed -= (long) transaction.getAmount() * 100;
     }
 
     @Override
