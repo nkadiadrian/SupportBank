@@ -18,4 +18,12 @@ public class AccountMap {
         accountMap.get(to).addTransactionTo(transaction);
     }
 
+    public Map<String, Account> getAccountMap() {
+        return accountMap;
+    }
+
+    public void setAccountMap(Map<String, Account> accountMap) {
+        this.accountMap = accountMap;
+    }
+
 }

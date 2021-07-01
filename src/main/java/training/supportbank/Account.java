@@ -23,4 +23,10 @@ public class Account {
         transactions.add(transaction);
         amountOwed -= transaction.getAmount();
     }
+
+    @Override
+    public String toString() {
+        return name + '\'' +
+                ", amountOwed " + amountOwed;
+    }
 }
