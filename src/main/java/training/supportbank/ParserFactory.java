@@ -1,7 +1,9 @@
 package training.supportbank;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -11,6 +13,9 @@ import java.util.regex.Pattern;
 import java.io.File;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
@@ -46,12 +51,18 @@ public class ParserFactory {
     }
 
     private static void parseJSON(AccountMap accountMap, String fileName) {
+        Gson gson = new Gson();
+        try (Reader reader = new FileReader(fileName)) {
+            Type transactionList = new TypeToken<ArrayList<Transaction>>(){}.getType();
+
+            List<Transaction> transactions = gson.fromJson(reader, transactionList);
+            for (Transaction transaction : transactions) {
+                accountMap.addTransaction(transaction);
+            }
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
-
-
-
-
-
     
     private static void parseXML(AccountMap accountMap, String fileName) {
         try{
