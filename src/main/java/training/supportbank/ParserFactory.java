@@ -6,6 +6,16 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
+// for XML file
+import java.io.File;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.DocumentBuilder;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.Node;
+import org.w3c.dom.Element;
+
 public class ParserFactory {
     private static final String FILE_ENDING_REGEX = ".+\\.(\\w+)";
 
@@ -38,7 +48,40 @@ public class ParserFactory {
     private static void parseJSON(AccountMap accountMap, String fileName) {
     }
 
+
+
+
+
+    
     private static void parseXML(AccountMap accountMap, String fileName) {
+        try{
+            File inputFile = new File(fileName);
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            Document doc = dBuilder.parse(inputFile);
+            doc.getDocumentElement().normalize(); 
+            NodeList nList = doc.getElementsByTagName("SupportTansaction");
+
+            for(int temp = 0; temp <nList.getLength(); temp++){
+                Node nNode =nList.item(temp);
+                if(nNode.getNodeType() == Node.ELEMENT_NODE){
+                    Element eElement = (Element) nNode;
+                    String date = eElement.getAttribute("Date");
+                    String description = eElement.getElementsByTagName("Description").item(0).getTextContent();
+                    String value = eElement.getElementsByTagName("Value").item(0).getTextContent();
+                    String from = eElement.getElementsByTagName("Parties").item(0).getTextContent();
+                    String to = eElement.getElementsByTagName("Parties").item(1).getTextContent();
+                    Transaction transaction = new Transaction(date+","+from+"," +to+","+description+","+value);
+                    accountMap.addTransaction(transaction);
+
+                }
+            }
+
+
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     public static void parseCSV(AccountMap accountMap, String fileName) {
