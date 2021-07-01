@@ -67,4 +67,14 @@ public class Transaction {
     public void setAmount(long amount) {
         this.amount = amount;
     }
+
+    @Override
+    public String toString() {
+        return "Transaction: " +
+                "date: " + date +
+                ", from: '" + from + '\'' +
+                ", to: '" + to + '\'' +
+                ", narrative: '" + narrative + '\'' +
+                ", amount: " + amount;
+    }
 }
