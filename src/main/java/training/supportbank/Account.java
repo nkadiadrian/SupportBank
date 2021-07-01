@@ -14,6 +14,30 @@ public class Account {
         transactions = new ArrayList<>();
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public long getAmountOwed() {
+        return amountOwed;
+    }
+
+    public void setAmountOwed(long amountOwed) {
+        this.amountOwed = amountOwed;
+    }
+
+    public List<Transaction> getTransactions() {
+        return transactions;
+    }
+
+    public void setTransactions(List<Transaction> transactions) {
+        this.transactions = transactions;
+    }
+
     public void addTransactionTo(Transaction transaction) {
         transactions.add(transaction);
         amountOwed += transaction.getAmount();
@@ -26,7 +50,6 @@ public class Account {
 
     @Override
     public String toString() {
-        return name + '\'' +
-                ", amountOwed " + amountOwed;
+        return name + ", amountOwed: " + amountOwed/100.0;
     }
 }
