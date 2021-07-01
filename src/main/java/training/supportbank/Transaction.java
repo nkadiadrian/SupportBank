@@ -25,7 +25,7 @@ public class Transaction {
         this.from = fields.get(1);
         this.to = fields.get(2);
         this.narrative = fields.get(3);
-        this.amount = (long) Double.parseDouble(fields.get(4));
+        this.amount = (long) (Double.parseDouble(fields.get(4)) * 100);
     }
 
     public Date getDate() {
