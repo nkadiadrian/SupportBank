@@ -21,21 +21,9 @@ public class AccountMap {
         accountMap.get(to).addTransactionTo(transaction);
     }
 
-    public void parseCSV(){
-        try {
-            Scanner sc = new Scanner(new File("src/main/java/training/supportbank/Transactions2014.csv"));
-            String row = "";
-            if (sc.hasNextLine()) sc.nextLine(); //ignores the first line of the csv file as it is the header
-            while (sc.hasNextLine()) {
-                row = sc.nextLine();
-                Transaction transaction = new Transaction(row);
-                this.addTransaction(transaction);
-            }
-            sc.close();
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
 
+    public void parseInput(String fileName) {
+        ParserFactory.parseInput(this, fileName);
     }
 
     public Map<String, Account> getAccountMap() {
