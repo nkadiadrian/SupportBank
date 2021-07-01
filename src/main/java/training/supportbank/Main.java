@@ -13,8 +13,12 @@ public class Main {
     public static void main(String[] args) {
         AccountMap accountMap  = new AccountMap();
 
-        accountMap.parseCSV();
+        accountMap.parseInput("src/main/java/training/supportbank/Transactions2014.csv");
 
+        inputLoop(accountMap);
+    }
+
+    private static void inputLoop(AccountMap accountMap) {
         boolean exit = false;
         while (!exit) {
             Scanner scanner = new Scanner(System.in);
