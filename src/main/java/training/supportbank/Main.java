@@ -59,7 +59,7 @@ public class Main {
                 exit = true;
                 System.out.println("Preparing to load another file");
             } else if (input.equalsIgnoreCase("QUIT")) {
-              exit = true;
+              exit = true;  
               killProgram = true;
               System.out.println("Exiting Support Bank");
             } else if (input.equals("List All")) {
