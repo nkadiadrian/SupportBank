@@ -1,10 +1,15 @@
 package training.supportbank;
 
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Main {
+    private static final Logger LOGGER = LogManager.getLogger(Main.class);
     public static final String LIST_REGEX = "List[\\s]+(\\w[ \\w]+)";
     public static final String IMPORT_REGEX = "Import File[\\s]+([/\\w\\\\]+.[\\w]+)";
 
@@ -12,6 +17,7 @@ public class Main {
         AccountMap accountMap  = new AccountMap();
         boolean killProgram = false;
 
+        LOGGER.info("TEST INFO LOG");
         while (!killProgram) {
             killProgram = importFileLoop(accountMap);
             killProgram = listInputLoop(accountMap, killProgram);
