@@ -22,12 +22,8 @@ public class Account {
         this.name = name;
     }
 
-    public float getAmountOwed() {
+    public long getAmountOwed() {
         return amountOwed;
-    }
-
-    public void setAmountOwed(long amountOwed) {
-        this.amountOwed = amountOwed;
     }
 
     public List<Transaction> getTransactions() {

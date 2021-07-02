@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -16,12 +17,9 @@ import java.util.regex.Pattern;
 
 
 // for XML file
-import java.io.File;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
@@ -37,8 +35,10 @@ public class ParserFactory {
     public static void parseInput(AccountMap accountMap, String fileName) {
         Pattern pattern = Pattern.compile(FILE_ENDING_REGEX, Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(fileName);
+        //String fileType = Arrays.stream(fileName.split("\\.")).collect(Collectors.toList()).get(-1);
         if (matcher.matches()) {
-            selectParser(accountMap, fileName, matcher.group(1));
+            String fileType = matcher.group(1);
+            selectParser(accountMap, fileName, fileType);
         }
     }
 
@@ -56,7 +56,6 @@ public class ParserFactory {
                 parseXML(accountMap, fileName);
                 break;
             default:
-                System.out.println("Defaulting");
                 parseCSV(accountMap, fileName);
         }
     }
@@ -120,7 +119,7 @@ public class ParserFactory {
 
     }
 
-    public static void parseCSV(AccountMap accountMap, String fileName) {
+    private static void parseCSV(AccountMap accountMap, String fileName) {
         try {
             Scanner sc = new Scanner(new File(fileName));
             String row = "";
